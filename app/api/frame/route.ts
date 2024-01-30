@@ -27,7 +27,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     // Airdrop NFT to the user's wallet
     // TODO: Change `ownerAddress` to the embedded wallet address once the above is done
     const tx = await airdropTo(ownerAddress);
-    console.log(tx);
+    if (!tx) return new NextResponse(errorFrame);
 
     return new NextResponse(successFrame);
 }
