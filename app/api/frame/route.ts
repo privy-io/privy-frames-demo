@@ -1,16 +1,35 @@
-import { createFrame } from '@/app/src/farcaster';
+import { errorFrame, getFidFromFrameRequest, getOwnerAddressFromFid, successFrame } from '@/app/lib/farcaster';
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
-
-const IMAGE_URL = 'https://docs.privy.io/img/privy-logo-full.png';
+import { airdropTo } from '@/app/lib/nft';
 
 export async function POST(req: NextRequest): Promise<Response> {
+    let frameRequest: FrameRequest | undefined;
+
+    // Parse request from Frame for fid
     try {
-        const body: FrameRequest = await req.json();
-    } catch (err) {
-        console.error(err);
+        frameRequest = await req.json();
+        if (!frameRequest) throw new Error('Could not deserialize request from frame');
+    } catch {
+        return new NextResponse(errorFrame);
     }
-    return new NextResponse(createFrame(IMAGE_URL, 'Second state'));
+    const fid = getFidFromFrameRequest(frameRequest);
+
+    // Query FC Registry contract to get owner address from fid
+    const ownerAddress = await getOwnerAddressFromFid(fid);
+    if (!ownerAddress) return new NextResponse(errorFrame);
+
+    // TODO: Add code to pre-generate a FarcasterAccount in the public auth demo
+    // with an embedded wallet using the `fid` and `ownerAddress`. If there is an 
+    // existing FarcasterAccount corresponding to those values, just use the embedded
+    // wallet associated with it
+    
+    // Airdrop NFT to the user's wallet
+    // TODO: Change `ownerAddress` to the embedded wallet address once the above is done
+    const tx = await airdropTo(ownerAddress);
+    console.log(tx);
+
+    return new NextResponse(successFrame);
 }
 
 export const dynamic = 'force-dynamic';
