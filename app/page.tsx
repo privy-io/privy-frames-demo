@@ -5,7 +5,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
 const frameMetadata = getFrameMetadata({
   buttons: ['Click me'],
-  image: '',
+  image: `${baseUrl}/start-frame.png`,
   post_url: `${baseUrl}/api/frame`,
 });
 
