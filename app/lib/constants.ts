@@ -7,4 +7,5 @@ export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ankush-3000
 export const MESSAGE_VALIDATION_URL = 'https://nemes.farcaster.xyz:2281/v1/validateMessage';
 export const AUTH_DEMO_URL = 'https://demo.privy.dev';
 export const HUB_URL = 'nemes.farcaster.xyz:2283';
+export const USER_IMPORT_URL = 'https://auth.staging.privy.io/api/v1/users';
 

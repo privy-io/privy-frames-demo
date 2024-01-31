@@ -11,21 +11,20 @@ export enum FrameImageUrls {
     ERROR = 'https://privy-frames-demo.vercel.app/error.svg'
 }
 
-export const createFrame = (imageUrl: string, buttonText: string, willRedirect: boolean = false) => {
+export const createFrame = (imageUrl: string, buttonText: string) => {
     return (`
         <!DOCTYPE html>
         <html>
             <head>
             <meta name="fc:frame" content="vNext">
             <meta name="fc:frame:image" content="${imageUrl}">
-            <meta name="fc:frame:post_url" content="${BASE_URL}/api/${willRedirect ? 'redirect' : 'frame'}">
+            <meta name="fc:frame:post_url" content="${BASE_URL}/api/frame">
             <meta name="fc:frame:button:1" content="${buttonText}">
-            <meta name="fc:frame:button:1:action" content="${willRedirect ? 'post_redirect' : 'post'}">
             </head>
         </html>`);
 }
-export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'View your NFT', true);
-export const errorFrame = createFrame(FrameImageUrls.ERROR, 'Try again');
+export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Minted!');
+export const errorFrame = createFrame(FrameImageUrls.ERROR, 'Try again?');
 
 export const parseFrameRequest = async (request: FrameRequest) => {
     const hub = getSSLHubRpcClient(HUB_URL);
