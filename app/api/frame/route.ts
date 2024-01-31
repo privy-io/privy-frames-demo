@@ -1,4 +1,4 @@
-import { errorFrame, getFidFromFrameRequest, getOwnerAddressFromFid, successFrame } from '@/app/lib/farcaster';
+import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame } from '@/app/lib/farcaster';
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { airdropTo } from '@/app/lib/nft';
@@ -6,14 +6,15 @@ import { airdropTo } from '@/app/lib/nft';
 export async function POST(req: NextRequest): Promise<Response> {
     let frameRequest: FrameRequest | undefined;
 
-    // Parse request from Frame for fid
+    // Parse and validate request from Frame for fid
     try {
         frameRequest = await req.json();
         if (!frameRequest) throw new Error('Could not deserialize request from frame');
     } catch {
         return new NextResponse(errorFrame);
     }
-    const fid = getFidFromFrameRequest(frameRequest);
+    const {fid, isValid} = await parseFrameRequest(frameRequest);
+    if (!fid || !isValid) return new NextResponse(errorFrame);
 
     // Query FC Registry contract to get owner address from fid
     const ownerAddress = await getOwnerAddressFromFid(fid);

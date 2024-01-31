@@ -1,7 +1,9 @@
 import { FrameRequest } from "@coinbase/onchainkit";
 import { createPublicClient, getContract, http } from "viem";
 import { optimism } from "viem/chains";
-import { BASE_URL, ID_REGISTRY_CONTRACT_ADDRESS, ZERO_ADDRESS } from "./constants";
+import { BASE_URL, HUB_URL, ID_REGISTRY_CONTRACT_ADDRESS, MESSAGE_VALIDATION_URL, ZERO_ADDRESS } from "./constants";
+import axios from "axios";
+import { getSSLHubRpcClient, Message } from '@farcaster/hub-nodejs';
 
 export enum FrameImageUrls {
     START = 'https://privy-frames-demo.vercel.app/start-frame.png',
@@ -9,24 +11,42 @@ export enum FrameImageUrls {
     ERROR = 'https://privy-frames-demo.vercel.app/error-frame.png'
 }
 
-export const createFrame = (imageUrl: string, buttonText: string) => {
+export const createFrame = (imageUrl: string, buttonText: string, willRedirect: boolean = false) => {
     return (`
         <!DOCTYPE html>
         <html>
             <head>
             <meta name="fc:frame" content="vNext">
             <meta name="fc:frame:image" content="${imageUrl}">
-            <meta name="fc:frame:post_url" content="${BASE_URL}/api/frame">
+            <meta name="fc:frame:post_url" content="${BASE_URL}/api/${willRedirect ? 'redirect' : 'frame'}">
             <meta name="fc:frame:button:1" content="${buttonText}">
+            <meta name="fc:frame:button:1:action" content="${willRedirect ? 'post_redirect' : 'post'}">
             </head>
         </html>`);
 }
-export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Okay');
+export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'View your NFT', true);
 export const errorFrame = createFrame(FrameImageUrls.ERROR, 'Try again');
 
-export const getFidFromFrameRequest = (request: FrameRequest) => {
-    // TODO(PO): Add validation against a Farcaster hub
-    return request.untrustedData.fid;
+export const parseFrameRequest = async (request: FrameRequest) => {
+    const hub = getSSLHubRpcClient(HUB_URL);
+    let fid: number | undefined;
+    let isValid: boolean = true;
+
+    try {
+        const decodedMessage = Message.decode(
+            Buffer.from(request.trustedData.messageBytes, "hex")
+        );
+        const result = await hub.validateMessage(decodedMessage);
+        if (!result.isOk() || !result.value.valid || !result.value.message) {
+            isValid = false;
+        } else {
+            fid = result.value.message.data?.fid;
+        }
+    } catch (error) {
+        console.error(error)
+    }
+
+    return {fid: fid, isValid: isValid};
 }
 
 export const getOwnerAddressFromFid = async (fid: number) => {

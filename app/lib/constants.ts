@@ -4,4 +4,7 @@ export const ZERO_ADDRESS: `0x${string}` = '0x0000000000000000000000000000000000
 
 // Frames don't quite work on localhost, so I have the default base URL point to my CF tunnel
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://ankush-3000.privy.dev';
+export const MESSAGE_VALIDATION_URL = 'https://nemes.farcaster.xyz:2281/v1/validateMessage';
+export const AUTH_DEMO_URL = 'https://demo.privy.dev';
+export const HUB_URL = 'nemes.farcaster.xyz:2283';
 
