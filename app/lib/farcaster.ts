@@ -6,9 +6,9 @@ import axios from "axios";
 import { getSSLHubRpcClient, Message } from '@farcaster/hub-nodejs';
 
 export enum FrameImageUrls {
-    START = 'https://privy-frames-demo.vercel.app/start-frame.png',
-    SUCCESS = 'https://privy-frames-demo.vercel.app/success-frame.png',
-    ERROR = 'https://privy-frames-demo.vercel.app/error-frame.png'
+    START = 'https://privy-frames-demo.vercel.app/landing.svg',
+    SUCCESS = 'https://privy-frames-demo.vercel.app/success.svg',
+    ERROR = 'https://privy-frames-demo.vercel.app/error.svg'
 }
 
 export const createFrame = (imageUrl: string, buttonText: string, willRedirect: boolean = false) => {
