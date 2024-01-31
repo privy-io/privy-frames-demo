@@ -1,6 +1,6 @@
 import { createWalletClient, encodeFunctionData, http } from "viem";
 import { mnemonicToAccount } from "viem/accounts";
-import { goerli } from "viem/chains";
+import { goerli, optimismSepolia } from "viem/chains";
 import { NFT_CONTRACT_ADDRESS } from "./constants";
 
 const NFT_WALLET_MNEMONIC = process.env.NFT_WALLET_MNEMONIC as string;
@@ -22,7 +22,7 @@ const MINT_ABI = {
 export const airdropTo = async (recipient: `0x${string}`) => {
     try {
         const client = createWalletClient({
-            chain: goerli,
+            chain: optimismSepolia,
             transport: http()
         });
         const account = mnemonicToAccount(NFT_WALLET_MNEMONIC);
