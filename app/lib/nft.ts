@@ -1,6 +1,6 @@
 import { createWalletClient, encodeFunctionData, http } from "viem";
 import { mnemonicToAccount } from "viem/accounts";
-import { goerli, optimismSepolia } from "viem/chains";
+import { optimismSepolia } from "viem/chains";
 import { NFT_CONTRACT_ADDRESS } from "./constants";
 
 const NFT_WALLET_MNEMONIC = process.env.NFT_WALLET_MNEMONIC as string;
