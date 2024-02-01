@@ -2,7 +2,7 @@ import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame } f
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { airdropTo } from '@/app/lib/nft';
-import { createEmbeddedWalletForFid } from '@/app/lib/embedded-wallet';
+import { createOrFindEmbeddedWalletForFid } from '@/app/lib/embedded-wallet';
 
 export async function POST(req: NextRequest): Promise<Response> {
     let frameRequest: FrameRequest | undefined;
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     if (!ownerAddress) return new NextResponse(errorFrame);
 
     // Generate an embedded wallet associated with the fid
-    const embeddedWalletAddress = await createEmbeddedWalletForFid(fid, ownerAddress);
+    const embeddedWalletAddress = await createOrFindEmbeddedWalletForFid(fid, ownerAddress);
     if (!embeddedWalletAddress) return new NextResponse(errorFrame);
     
     // Airdrop NFT to the user's wallet
