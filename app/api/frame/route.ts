@@ -2,6 +2,7 @@ import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame } f
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { airdropTo } from '@/app/lib/nft';
+import { createEmbeddedWalletForFid } from '@/app/lib/embedded-wallet';
 
 export async function POST(req: NextRequest): Promise<Response> {
     let frameRequest: FrameRequest | undefined;
@@ -20,15 +21,13 @@ export async function POST(req: NextRequest): Promise<Response> {
     const ownerAddress = await getOwnerAddressFromFid(fid);
     if (!ownerAddress) return new NextResponse(errorFrame);
 
-    // TODO: Add code to pre-generate a FarcasterAccount in the public auth demo
-    // with an embedded wallet using the `fid` and `ownerAddress`. If there is an 
-    // existing FarcasterAccount corresponding to those values, just use the embedded
-    // wallet associated with it
+    // Generate an embedded wallet associated with the fid
+    const embeddedWalletAddress = await createEmbeddedWalletForFid(fid, ownerAddress);
+    if (!embeddedWalletAddress) return new NextResponse(errorFrame);
     
     // Airdrop NFT to the user's wallet
-    // TODO: Change `ownerAddress` to the embedded wallet address once the above is done
-    // const tx = await airdropTo(ownerAddress);
-    // if (!tx) return new NextResponse(errorFrame);
+    const tx = await airdropTo(embeddedWalletAddress);
+    if (!tx) return new NextResponse(errorFrame);
 
     return new NextResponse(successFrame);
 }

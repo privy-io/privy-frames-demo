@@ -1,12 +1,11 @@
-import { getFrameMetadata } from '@coinbase/onchainkit';
-import type { Metadata } from 'next';
-import { BASE_URL } from './lib/constants';
-import { FrameImageUrls } from './lib/farcaster';
+import {getFrameMetadata} from '@coinbase/onchainkit';
+import type {Metadata} from 'next';
+import {FrameImageUrls, FRAME_BASE_URL} from './lib/farcaster';
 
 const frameMetadata = getFrameMetadata({
   buttons: ['Mint'],
   image: FrameImageUrls.START,
-  post_url: `${BASE_URL}/api/frame`,
+  post_url: `${FRAME_BASE_URL}/api/frame`,
 });
 
 export const metadata: Metadata = {
@@ -15,7 +14,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Privy Frames',
     description: 'Privy Frames',
-    // TODO: This should be a regular OG image, not a frame one
     images: [FrameImageUrls.START],
   },
   other: {
