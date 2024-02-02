@@ -14,7 +14,6 @@ const config: AxiosRequestConfig = {
 
 export const createOrFindEmbeddedWalletForFid = async (fid: number, ownerAddress: string) => {
     const {address, conflictingDid} = await createEmbeddedWalletForFid(fid, ownerAddress);
-    console.log({address, conflictingDid});
     if (address) return address;
 
     // If no conflicting DID was found for the user, it is an unrecoverable error
