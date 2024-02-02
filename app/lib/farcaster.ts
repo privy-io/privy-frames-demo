@@ -32,7 +32,7 @@ export const createWalletFrame = (address: string) => {
     return createFrame(FrameImageUrls.WALLET, 'Mint your NFT', `api/mint/${address}`)
 }
 
-export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Done', 'api/wallet');
+export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Done', 'api/done');
 export const errorFrame = createFrame(FrameImageUrls.ERROR, 'Try again?', 'api/wallet');
 
 export const parseFrameRequest = async (request: FrameRequest) => {
