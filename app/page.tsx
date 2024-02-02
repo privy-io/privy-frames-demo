@@ -3,9 +3,9 @@ import type {Metadata} from 'next';
 import {FrameImageUrls, FRAME_BASE_URL} from './lib/farcaster';
 
 const frameMetadata = getFrameMetadata({
-  buttons: ['Mint'],
+  buttons: ['Create a wallet'],
   image: FrameImageUrls.START,
-  post_url: `${FRAME_BASE_URL}/api/frame`,
+  post_url: `${FRAME_BASE_URL}/api/wallet`,
 });
 
 export const metadata: Metadata = {

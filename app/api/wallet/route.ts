@@ -1,4 +1,4 @@
-import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame } from '@/app/lib/farcaster';
+import { errorFrame, parseFrameRequest, getOwnerAddressFromFid, successFrame, createWalletFrame } from '@/app/lib/farcaster';
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { airdropTo } from '@/app/lib/nft';
@@ -24,12 +24,8 @@ export async function POST(req: NextRequest): Promise<Response> {
     // Generate an embedded wallet associated with the fid
     const embeddedWalletAddress = await createOrFindEmbeddedWalletForFid(fid, ownerAddress);
     if (!embeddedWalletAddress) return new NextResponse(errorFrame);
-    
-    // Airdrop NFT to the user's wallet
-    const tx = await airdropTo(embeddedWalletAddress);
-    if (!tx) return new NextResponse(errorFrame);
 
-    return new NextResponse(successFrame);
+    return new NextResponse(createWalletFrame(embeddedWalletAddress));
 }
 
 export const dynamic = 'force-dynamic';

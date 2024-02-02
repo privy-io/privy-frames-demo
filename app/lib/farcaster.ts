@@ -14,20 +14,25 @@ export enum FrameImageUrls {
     ERROR = 'https://privy-frames-demo.vercel.app/error.svg'
 }
 
-export const createFrame = (imageUrl: string, buttonText: string) => {
+export const createFrame = (imageUrl: string, buttonText: string, apiPath: string) => {
     return (`
         <!DOCTYPE html>
         <html>
             <head>
             <meta name="fc:frame" content="vNext">
             <meta name="fc:frame:image" content="${imageUrl}">
-            <meta name="fc:frame:post_url" content="${FRAME_BASE_URL}/api/frame">
+            <meta name="fc:frame:post_url" content="${FRAME_BASE_URL}/${apiPath}">
             <meta name="fc:frame:button:1" content="${buttonText}">
             </head>
         </html>`);
 }
-export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Minted!');
-export const errorFrame = createFrame(FrameImageUrls.ERROR, 'Try again?');
+
+export const createWalletFrame = (address: string) => {
+    return createFrame(FrameImageUrls.SUCCESS, 'Mint your NFT', `api/mint/${address}`)
+}
+
+export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Done', 'api/wallet');
+export const errorFrame = createFrame(FrameImageUrls.ERROR, 'Try again?', 'api/wallet');
 
 export const parseFrameRequest = async (request: FrameRequest) => {
     const hub = getSSLHubRpcClient(HUB_URL);
