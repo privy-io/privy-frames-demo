@@ -10,6 +10,7 @@ const HUB_URL = 'nemes.farcaster.xyz:2283';
 
 export enum FrameImageUrls {
     START = 'https://privy-frames-demo.vercel.app/landing.svg',
+    WALLET = 'https://privy-frames-demo.vercel.app/wallet.svg',
     SUCCESS = 'https://privy-frames-demo.vercel.app/success.svg',
     ERROR = 'https://privy-frames-demo.vercel.app/error.svg'
 }
@@ -28,7 +29,7 @@ export const createFrame = (imageUrl: string, buttonText: string, apiPath: strin
 }
 
 export const createWalletFrame = (address: string) => {
-    return createFrame(FrameImageUrls.SUCCESS, 'Mint your NFT', `api/mint/${address}`)
+    return createFrame(FrameImageUrls.WALLET, 'Mint your NFT', `api/mint/${address}`)
 }
 
 export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Done', 'api/wallet');
