@@ -1,6 +1,7 @@
 import {getFrameMetadata} from '@coinbase/onchainkit';
 import type {Metadata} from 'next';
 import {FrameImageUrls, FRAME_BASE_URL} from './lib/farcaster';
+import RedirectToDemo from '@/components/redirect';
 
 const frameMetadata = getFrameMetadata({
   buttons: ['Create a wallet'],
@@ -21,9 +22,11 @@ export const metadata: Metadata = {
   },
 };
 
+
 export default function Page() {
   return (
     <>
       <h1>Privy Frames</h1>
+      <RedirectToDemo />
     </>);
 }

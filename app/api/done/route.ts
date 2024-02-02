@@ -1,8 +1,8 @@
-import { successFrame } from '@/app/lib/farcaster';
+import { FRAME_BASE_URL } from '@/app/lib/farcaster';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest): Promise<Response> {
-    return new NextResponse(successFrame);
+    return NextResponse.redirect(FRAME_BASE_URL, {status: 302});
 }
 
 export const dynamic = 'force-dynamic';

@@ -15,7 +15,7 @@ export enum FrameImageUrls {
     ERROR = 'https://privy-frames-demo.vercel.app/error.png'
 }
 
-export const createFrame = (imageUrl: string, buttonText: string, apiPath: string) => {
+export const createFrame = (imageUrl: string, buttonText: string, apiPath: string, isRedirect = false) => {
     return (`
         <!DOCTYPE html>
         <html>
@@ -24,6 +24,7 @@ export const createFrame = (imageUrl: string, buttonText: string, apiPath: strin
             <meta name="fc:frame:image" content="${imageUrl}">
             <meta name="fc:frame:post_url" content="${FRAME_BASE_URL}/${apiPath}">
             <meta name="fc:frame:button:1" content="${buttonText}">
+            <meta name="fc:frame:button:1:action" content="${isRedirect ? 'post_redirect' : 'post'}">
             </head>
         </html>`);
 }
@@ -32,7 +33,7 @@ export const createWalletFrame = (address: string) => {
     return createFrame(FrameImageUrls.WALLET, 'Mint your NFT', `api/mint/${address}`)
 }
 
-export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Done', 'api/done');
+export const successFrame = createFrame(FrameImageUrls.SUCCESS, 'Done', 'api/done', true);
 export const errorFrame = createFrame(FrameImageUrls.ERROR, 'Try again?', 'api/wallet');
 
 export const parseFrameRequest = async (request: FrameRequest) => {
