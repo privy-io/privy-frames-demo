@@ -13,7 +13,7 @@ const MINT_ABI = {
             "type": "address"
         }
     ],
-    "name": "mint",
+    "name": "safeMint",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

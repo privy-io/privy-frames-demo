@@ -49,3 +49,14 @@ You can test this Frame using [Warpcast Embed Tools](https://warpcast.com/~/deve
 - `api/wallet/route.ts` to see how the first Frame interaction generates an embedded wallet for the user
 - `api/mint/[address].ts` to see how the second Frame interaction airdrops an NFT to the user
 - `contracts/FrameDrop.sol` for the sample contract used, from OpenZeppelin
+
+
+# How to interact
+
+1. Go to https://dashboard.privy.io/account
+
+2. Add Optimism Sepolia testenet to your wallet https://chainlist.org/chain/11155420
+
+3. Claim Op Sepolia here https://app.optimism.io/faucet
+
+See https://docs.openzeppelin.com/contracts/3.x/erc721#Presets
