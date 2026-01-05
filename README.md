@@ -1,5 +1,7 @@
 # Privy x Frames Demo
 
+> **This repository is archived.** For up-to-date examples, please visit [github.com/privy-io/examples](https://github.com/privy-io/examples).
+
 This is an example [**Frame**](https://warpcast.notion.site/Farcaster-Frames-4bd47fe97dc74a42a48d3a234636d8c5) to demonstrate how you can use [**Frames**](https://warpcast.notion.site/Farcaster-Frames-4bd47fe97dc74a42a48d3a234636d8c5) alongside Privy's [**Farcaster login**](https://docs.privy.io/guide/guides/farcaster-login) feature to create novel, cross-app experiences for your users.
 
 When a user first sees this demo Frame in their Farcaster client, they can click a button to redeem a testnet NFT. Behind the scenes, Privy creates an embedded wallet associater with the current Farcaster user and airdrops an NFT to it. Users can view their NFT by signing in with their Farcaster account to the [**Privy Demo**](https://demo.privy.io). This is a **testnet NFT** on the Optimism Sepolia testnet.
